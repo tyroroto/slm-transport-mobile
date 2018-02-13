@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <!--<button ion-button menuToggle>-->
+      <!--<ion-icon name="menu"></ion-icon>-->
+    <!--</button>-->
+    <!--<button ion-button menuToggle>-->
+      <!--<ion-icon name="menu"></ion-icon>-->
+    <!--</button>-->
+    <ion-title>SLM Mobile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+  <ion-tabs [tabsPlacement]="top">
+    <ion-tab [root]="orderListPage" tabTitle="รายการส่งสินค้า" ></ion-tab>
+    <ion-tab [root]="infoPage" tabTitle="ข้อมูลผู้ช้" ></ion-tab>
+    <ion-tab [root]="paymentPage" tabTitle="การชำระเงิน" ></ion-tab>
+  </ion-tabs>
+  <!--<h3 padding-top="">ข้อมูลผู้ใช้</h3>-->
+  <!--<ion-card>-->
+    <!--<ion-fab right>-->
+      <!--<button ion-fab mini (click)="openEditInfo()">edit</button>-->
+    <!--</ion-fab>-->
+    <!--<ion-card-header>-->
+      <!--<ion-label>-->
+        <!--ID : 22044-->
+      <!--</ion-label>-->
+      <!--<ion-label>-->
+        <!--ชื่อ. นาย กวินท์ ศิริคะเณรัตน์-->
+      <!--</ion-label>-->
+      <!--<button (click)="openPayment()" [outline]="true" ion-button="">-->
+        <!--รายการชำระเงิน-->
+      <!--</button>-->
+    <!--</ion-card-header>-->
+
+  <!--</ion-card>-->
+  <!--<br>-->
+
+
+</ion-content>

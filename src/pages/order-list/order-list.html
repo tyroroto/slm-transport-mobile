@@ -1,0 +1,25 @@
+<ion-content>
+  <div>
+    <h1> รายการส่งสินค้า</h1>
+    <ion-list no-padding="">
+      <ion-item *ngFor="let p of packages">
+        <h1> {{p.name}}</h1>
+        <p> ID:{{p.id}} ( 01-01-2017 )</p>
+
+        <h2 class="info-text">
+          วันที่ทำรายการ: 02-02-2017
+        </h2>
+        <h2 class="info-text">
+          วันที่ส่ง: 02-02-2017
+        </h2>
+        <h2 class="info-text">
+          {{p.status}}
+        </h2>
+        <button item-end="" ion-button="" (click)="viewPackage(p)">
+          View
+        </button>
+      </ion-item>
+
+    </ion-list>
+  </div>
+</ion-content>

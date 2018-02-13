@@ -1,12 +1,13 @@
-page-home {
+page-home-user {
   .text-item-status{
        font-size: 3.4rem;
-         color: #f7a900;
+       font-weight: bold;
+       color: #f7a900;
      }
 
   .text-item-confirm{
     font-size: 2.4rem;
-    //font-weight: bold;
+    font-weight: bold;
     color: #f7a900;
     margin-bottom: 0px;
   }
@@ -16,18 +17,4 @@ page-home {
     color: #8c8c8c;
     margin-bottom: 0px;
   }
-
-  ion-spinner * {
-    width: 42px;
-    height: 42px;
-    stroke: #444;
-    fill: #222;
-  }
-
-  .spinner-container {
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-  }
-
 }

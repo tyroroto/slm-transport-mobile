@@ -1,0 +1,88 @@
+<!--
+  Generated template for the PackageListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--<ion-header>-->
+
+<!--<ion-navbar>-->
+<!--<button ion-button menuToggle>-->
+<!--<ion-icon name="menu"></ion-icon>-->
+<!--</button>-->
+<!--<ion-title>ตารางงาน</ion-title>-->
+<!--</ion-navbar>-->
+
+<!--</ion-header>-->
+
+
+<ion-content no-padding="">
+  <div>
+    <h1 padding-left=""> รายการส่งสินค้า</h1>
+    <!--<ion-list>-->
+
+    <ion-searchbar
+      [(ngModel)]="searchInput"
+      [showCancelButton]="true"
+      [debounce]="1000"
+      (ionInput)="onSearch($event)">
+    </ion-searchbar>
+
+    <div class="spinner-container" *ngIf="isLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+    <ion-card *ngIf="worklist == null || worklist.length == 0">
+      <h1 class="text-item-none" text-center="">
+        ไม่มีงานมอบหมาย
+      </h1>
+    </ion-card>
+    <ion-card *ngFor="let w of worklist" style="margin-bottom:40px;padding-bottom: 6px">
+      <ion-card-content style="padding: 5px">
+        <!--<ion-card-title style="width: 50%">-->
+        <!--</ion-card-title>-->
+        <!--<ion-label text-right="" no-margin=""> </ion-label>-->
+        <!--<ion-label item-start="" no-margin> </ion-label>-->
+
+        <ion-row>
+          <ion-col col-6="">
+            <h1>{{w.date}}</h1>
+          </ion-col>
+          <ion-col col-6="">
+            <p text-right="">ID : {{w.id}} </p>
+          </ion-col>
+        </ion-row>
+        <!--<h2 text-right=""> <b>{{p.name}}</b></h2>-->
+
+        <!--<ion-item>-->
+        <!--</ion-item>-->
+        <hr>
+        <p class="font-size-s"> <u>สถานที่รับสินค้า </u> </p>
+        <h1 class="font-size-m" text-right="">
+          {{w.recieveLocation}}
+        </h1>
+        <p class="font-size-s"><u>สถานที่ส่งสินค้า </u> </p>
+        <h1 class="font-size-m" text-right="">
+          {{w.deliveryLocation}}
+        </h1>
+        <p class="font-size-s"> <u>พนักงานขับรถ </u> </p>
+        <h1 class="font-size-l" text-right=""> {{w.driver}}</h1>
+        <p class="font-size-s"> <u>โอเปอร์เรเตอร์ </u> </p>
+        <h1 class="font-size-l" text-right=""> {{w.officer}}</h1>
+        <p class="font-size-s"> <u>ทะเบียนรถ</u> </p>
+        <h1 class="font-size-l" text-right=""> {{w.car}}</h1>
+        <p class="font-size-s"> <u>วันที่รับ-วันที่ส่ง</u> </p>
+        <h1 class="font-size-l" text-right=""> {{ w.recieveDate}} , {{w.deliveryDate}}</h1>
+        <hr>
+        <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
+        <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
+
+        <button float-right ion-button="" *ngIf="w.status == null" class="confirm-button" [default]="true"  round (click)="presentConfirm()"> ยืนยันรับสินค้า</button>
+        <button float-right ion-button="" *ngIf="w.status == 0" class="confirm-button" [default]="true"  round (click)="presentConfirm()"> ยืนยันเริ่มต้นสินค้า</button>
+        <button float-right ion-button="" *ngIf="w.status == 0" class="stock-button" [default]="true"  round (click)="doPrompt()"> ยืนยันพักสินค้า</button>
+      </ion-card-content>
+    </ion-card>
+
+    <!--</ion-list>-->
+  </div>
+
+</ion-content>
