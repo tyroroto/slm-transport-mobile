@@ -5,7 +5,6 @@ import {
 } from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {ApiProvider} from "../../providers/api/api";
-import {HomeUserPage} from "../home-user/home-user";
 
 @Component({
   selector: 'page-login',
@@ -62,18 +61,20 @@ export class LoginPage {
         this.api.currentUser.type = response["Emp_type"];
         this.api.currentUser.gender = response["Emp_sex"];
         if(this.api.role == "user") {
-          this.navCtrl.setRoot(HomeUserPage);
+          this.navCtrl.setRoot(HomePage);
         }else{
           this.navCtrl.setRoot(HomePage);
         }
       }catch (e){
-        this.loading.dismiss().catch(e=>console.warn(e));
+        this.showError(response);
       }
 
-    }).catch(e => console.warn(e));
+    }).catch(e => {
+      console.warn(e);
+      this.showError("");
+    });
 
   }
-
 
   presentLoadingDefault() {
     this.loading = this.loadingCtrl.create({

@@ -24,6 +24,7 @@
     <ion-searchbar
       [(ngModel)]="searchInput"
       [showCancelButton]="true"
+      placeholder="ค้นหาด้วย ID"
       [debounce]="1000"
       (ionInput)="onSearch($event)">
     </ion-searchbar>
@@ -31,11 +32,9 @@
     <div class="spinner-container" *ngIf="isLoading">
     <ion-spinner name="bubbles"></ion-spinner>
     </div>
-    <ion-card *ngIf="worklist == null || worklist.length == 0">
-      <h1 class="text-item-none" text-center="">
+      <h1 *ngIf="worklist == null || worklist.length == 0" class="text-item-none" text-center="">
         ไม่มีงานมอบหมาย
       </h1>
-    </ion-card>
     <ion-card *ngFor="let w of worklist" style="margin-bottom:40px;padding-bottom: 6px">
       <ion-card-content style="padding: 5px">
         <!--<ion-card-title style="width: 50%">-->
@@ -48,7 +47,7 @@
             <h1>{{w.date}}</h1>
           </ion-col>
           <ion-col col-6="">
-            <p text-right="">ID : {{w.id}} </p>
+            <p text-right="">ID : {{w.assId}} </p>
           </ion-col>
         </ion-row>
         <!--<h2 text-right=""> <b>{{p.name}}</b></h2>-->
@@ -76,9 +75,12 @@
         <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
         <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
 
-        <button float-right ion-button="" *ngIf="w.status == null" class="confirm-button" [default]="true"  round (click)="presentConfirm()"> ยืนยันรับสินค้า</button>
-        <button float-right ion-button="" *ngIf="w.status == 0" class="confirm-button" [default]="true"  round (click)="presentConfirm()"> ยืนยันเริ่มต้นสินค้า</button>
-        <button float-right ion-button="" *ngIf="w.status == 0" class="stock-button" [default]="true"  round (click)="doPrompt()"> ยืนยันพักสินค้า</button>
+        <button float-right ion-button="" *ngIf="w.status == null" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,0,'ยืนยันรับสินค้า')"> ยืนยันรับสินค้า</button>
+        <button float-right ion-button="" *ngIf="w.status == 0" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,2,'ยืนยันเริ่มต้นสินค้า')"> ยืนยันเริ่มต้นสินค้า</button>
+        <button float-right ion-button="" *ngIf="w.status == 0" class="stock-button" [default]="true"  round (click)="doPrompt(w,1)"> ยืนยันพักสินค้า</button>
+        <button float-right ion-button="" *ngIf="w.status == 1 || w.status == 2 " class="confirm-button" [default]="true"  round (click)="presentConfirm(w,3,'ยืนยันสินค้าถึงปลายทาง')"> ยืนยันสินค้าถึงปลายทาง</button>
+        <ion-label class="font-size-xl" color="secondary" text-right="" *ngIf="w.status == 3"> ส่งสินค้าแล้วเรียบร้อยแล้ว</ion-label>>
+
       </ion-card-content>
     </ion-card>
 

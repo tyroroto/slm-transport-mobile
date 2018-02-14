@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Worklist} from "../../providers/api/api";
-import {PackageListPage} from "../package-list/package-list";
+import {  NavController, NavParams } from 'ionic-angular';
 import {BroadcastData, BroadcastProvider} from "../../providers/broadcast/broadcast";
+import {Worklist} from "../../models/data";
 
 /**
  * Generated class for the OrderListPage page.

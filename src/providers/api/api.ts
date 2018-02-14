@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Package} from "../../pages/home-user/home-user";
 import {User} from "../../models/data";
 
 /*
@@ -42,6 +41,8 @@ export class ApiProvider {
   public editProfile(){
     let form = new FormData();
     console.log(this.currentUser.cid );
+    form.append("password" , this.password );
+    form.append("username" , this.username);
     form.append("Emp_id" , this.currentUser.id );
     form.append("Emp_name" , this.currentUser.name );
     form.append("Emp_tel" , this.currentUser.tel );
@@ -53,34 +54,17 @@ export class ApiProvider {
 
   }
 
-
-}
-
-
-
-export class Worklist {
-  public id;
-  public status;
-  public payment;
-  public packages : Array<Package>;
-  driver: string;
-  officer: string;
-  date: string;
-  car: string;
-  deliveryDate: Date;
-  recieveDate: Date;
-  deliveryLocation: string;
-  recieveLocation: string;
-
-  constructor(id,payment,status){
-    this.id = id;
-    this.payment = payment;
-    switch(status){
-      case 0 : this.status = "รอการชำระเงิน";break;
-      case 1 : this.status = "อยู่ระหว่างดำเนินงาน";break;
-      case 2 : this.status = "เสร็จสิ้นแล้ว";break;
-    }
+  public updateStatus(id,status,text){
+    let form = new FormData();
+    form.append("password" , this.password );
+    form.append("username" , this.username);
+    form.append("Ass_id" , id );
+    form.append("Ass_status" , status );
+    form.append("text" , text);
+    //type='customer' ,Cus_id ,Cus_name ,Cus_tel ,Cus_sex
+    return this.http.post("api/api_update_status.php",form);
 
   }
 }
+
 

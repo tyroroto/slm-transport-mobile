@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Worklist} from "../../providers/api/api";
+import {Worklist} from "../../models/data";
 
 /**
  * Generated class for the PaymentPage page.

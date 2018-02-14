@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
 import {AlertController, Loading,LoadingController, NavController} from 'ionic-angular';
 import {EditInfoPage} from "../edit-info/edit-info";
-import {PackageStatusPage} from "../package-status/package-status";
 import {PaymentPage} from "../payment/payment";
-import {Worklist} from "../../providers/api/api";
 import {PackageListPage} from "../package-list/package-list";
 import {OrderListPage} from "../order-list/order-list";
 import {BroadcastData, BroadcastProvider} from "../../providers/broadcast/broadcast";
+import {Worklist} from "../../models/data";
 
 @Component({
   selector: 'page-home-user',

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {ApiProvider, Worklist} from "../../providers/api/api";
+import {ApiProvider} from "../../providers/api/api";
 import {EditInfoPage} from "../edit-info/edit-info";
+import {Worklist} from "../../models/data";
 
 /**
  * Generated class for the PackageListPage page.
@@ -19,7 +20,8 @@ export class SchedulePage {
   searchInput;
   isLoading: boolean = false;
   worklist: Array<Worklist> = [
-
+  ];
+  _worklist: Array<Worklist> = [
   ];
 
   constructor(public navCtrl: NavController,
@@ -40,29 +42,37 @@ export class SchedulePage {
         w.driver =  item["Emp_car"];
         w.officer= item["Emp_oper"];
         w.date=item["order"]["Ors_date"];// new Date().toLocaleDateString();
-        w.status = item["order"]["Ors_status"] == null ? null : parseInt(item["order"]["Ors_status"]);
+        w.status = item["Ass_status"] == null ? null : parseInt(item["Ass_status"]);
         w.deliveryDate = item["order"]["Ors_deliverydate"];//new Date();
         w.recieveDate =  item["order"]["Ors_deliverydateget"]//new Date();
         w.deliveryLocation = item["order"]["Ors_place"];
         w.recieveLocation = item["order"]["Ors_delivery"];
+        w.assId= item["Ass_id"];
         w.car= "บท-7873";
         console.log(w);
-        this.worklist.push(w);
+        this._worklist.push(w);
       }
+      this.worklist = this._worklist;
+
     })
   }
 
   onSearch($event: UIEvent) {
-    console.log($event);
-    this.isLoading = true;
-    setTimeout( () => {
-      this.isLoading = false
-    },2000);
+    // this.isLoading = true;
+    this.worklist = [];
+    for(let w of this._worklist){
+      if(w.assId.includes(this.searchInput)){
+        this.worklist.push(w);
+      }
+    }
+    // setTimeout( () => {
+      // this.isLoading = false
+    // },2000);
   }
 
 
 
-  doPrompt() {
+  doPrompt(w : Worklist,status) {
     let alert = this.alertCtrl.create({
       title: 'ยืนยันการพักสินค้า',
       message: 'กรุณาใส่สถานที่และกดยืนยัน',
@@ -81,8 +91,9 @@ export class SchedulePage {
         },
         {
           text: 'Confirm',
-          handler: () => {
-            console.log('Saved clicked');
+          handler: data => {
+            console.log(data.place);
+            this.updateStatus(w,status,data.place)
           }
         }
       ]
@@ -113,39 +124,48 @@ export class SchedulePage {
     this.navCtrl.push(EditInfoPage);
   }
 
-  showError(text) {
+  showError() {
     this.loading.dismiss().then();
-    console.info(text);
     let alert = this.alertCtrl.create({
       title: "ผิดพลาด !",
-      subTitle: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง ' + text,
+      subTitle: 'การยืนยันล้มเหลว โปรดลองใหม่อีกครั้ง',
       buttons: ["OK"]
     });
     alert.present(prompt).then();
   }
 
-  presentConfirm() {
+  presentConfirm(w : Worklist,status,t) {
     let alert = this.alertCtrl.create({
-      title: 'Confirm',
-      message: 'ยืนยันสถานะสินค้า',
+      title: t,
+      // message: '',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'ยกเลิก',
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Confirm',
+          text: 'ยืนยัน',
           handler: () => {
             console.log('confirm');
-            this.presentLoadingDefault();
+            this.updateStatus(w,status,"")
           }
         }
       ]
     });
     alert.present();
+  }
+
+  updateStatus(w : Worklist,status,t){
+    this.presentLoadingDefault();
+    this.api.updateStatus(w.assId,status,t).toPromise().then( r=> {
+      w.status = status;
+      this.loading.dismiss().catch(e=>console.error(e));
+    }).catch(e => {
+      this.showError();
+    });
   }
 
 
