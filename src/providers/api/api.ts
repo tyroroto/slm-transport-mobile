@@ -29,14 +29,14 @@ export class ApiProvider {
     form.append("username" , user);
     this.username =user;
     this.password =pass;
-    return this.http.post("api/api_login",form,{responseType: 'text'});
+    return this.http.post("api/api_login.php",form,{responseType: 'text'});
   }
 
   public getWorklist(){
     let form = new FormData();
     form.append("password" , this.password );
     form.append("username" , this.username);
-    return this.http.post("api/api_worklist",form);
+    return this.http.post("api/api_worklist.php",form);
   }
 
   public editProfile(){
@@ -49,7 +49,7 @@ export class ApiProvider {
     form.append("Emp_card" , this.currentUser.cid );
     form.append("type" , "employee");
     //type='customer' ,Cus_id ,Cus_name ,Cus_tel ,Cus_sex
-    return this.http.post("api/api_edit_profile",form);
+    return this.http.post("api/api_edit_profile.php",form);
 
   }
 
