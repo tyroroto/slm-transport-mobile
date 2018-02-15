@@ -158,11 +158,28 @@ export class SchedulePage {
     alert.present();
   }
 
+  presentSuccess() {
+    let alert = this.alertCtrl.create({
+      title: 'ยืนยันสถานะสำเร็จแล้ว',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            console.log('confirm');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+
   updateStatus(w : Worklist,status,t){
     this.presentLoadingDefault();
     this.api.updateStatus(w.assId,status,t).toPromise().then( r=> {
       w.status = status;
       this.loading.dismiss().catch(e=>console.error(e));
+      this.presentSuccess();
     }).catch(e => {
       this.showError();
     });

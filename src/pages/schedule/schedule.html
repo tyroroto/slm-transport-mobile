@@ -74,12 +74,12 @@
         <hr>
         <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
         <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
-
+        <p class="font-size-s"> <u>ยืนยันสถานะสินค้า </u> </p>
         <button float-right ion-button="" *ngIf="w.status == null" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,0,'ยืนยันรับสินค้า')"> ยืนยันรับสินค้า</button>
         <button float-right ion-button="" *ngIf="w.status == 0" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,2,'ยืนยันเริ่มต้นสินค้า')"> ยืนยันเริ่มต้นสินค้า</button>
         <button float-right ion-button="" *ngIf="w.status == 0" class="stock-button" [default]="true"  round (click)="doPrompt(w,1)"> ยืนยันพักสินค้า</button>
         <button float-right ion-button="" *ngIf="w.status == 1 || w.status == 2 " class="confirm-button" [default]="true"  round (click)="presentConfirm(w,3,'ยืนยันสินค้าถึงปลายทาง')"> ยืนยันสินค้าถึงปลายทาง</button>
-        <ion-label class="font-size-xl" color="secondary" text-right="" *ngIf="w.status == 3"> ส่งสินค้าแล้วเรียบร้อยแล้ว</ion-label>>
+        <ion-label class="font-size-xl" color="secondary" text-right="" *ngIf="w.status == 3"> ส่งสินค้าแล้วเรียบร้อยแล้ว</ion-label>
 
       </ion-card-content>
     </ion-card>

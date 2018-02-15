@@ -65,4 +65,22 @@ export class EditInfoPage {
     }).catch(e=>console.error(e));
   }
 
+  representPosition(p){
+    switch (p){
+      case "0":
+        return 'เจ้าของบริษัท';
+      case "1":
+        return 'ผู้ดูแลระบบ';
+      case "2":
+        return 'พนักงานทั่วไป';
+      case "3":
+        return 'พนักงานขับรถ';
+      case "4":
+        return 'พนักงานโอเปอเรเตอร์';
+      default:
+        return 'ไม่ระบุ';
+    }
+
+  }
+
 }

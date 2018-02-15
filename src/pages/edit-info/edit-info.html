@@ -19,6 +19,15 @@
 
     <ion-item>
       <ion-label>
+        ตำแหน่ง
+      </ion-label>
+      <ion-label text-right="">
+        {{representPosition(api.currentUser.pos)}}
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
         ชื่อ-นามสกุล
       </ion-label>
       <ion-input text-right="" type="text" [(ngModel)]="api.currentUser.name"></ion-input>
