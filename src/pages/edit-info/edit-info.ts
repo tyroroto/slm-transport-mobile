@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {AlertController, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {ApiProvider} from "../../providers/api/api";
+import {User} from "../../models/data";
+import {LoginPage} from "../login/login";
+import {BroadcastData, BroadcastProvider} from "../../providers/broadcast/broadcast";
 
 /**
  * Generated class for the EditInfoPage page.
@@ -15,11 +18,13 @@ import {ApiProvider} from "../../providers/api/api";
 })
 export class EditInfoPage {
   loading: Loading;
-
+  editing: boolean = false;
+  tempUserInfo : User = new User();
   constructor(public navCtrl: NavController,
               public loadingCtrl: LoadingController,
               public api: ApiProvider,
-              public alertCtrl: AlertController,
+              public broadcast : BroadcastProvider,
+            public alertCtrl: AlertController,
               public navParams: NavParams) {
   }
 
@@ -28,6 +33,15 @@ export class EditInfoPage {
     console.log(this.api.currentUser)
   }
 
+  requestEdit(){
+    if(!this.editing){
+      this.tempUserInfo = Object.assign(this.tempUserInfo, this.api.currentUser);
+      this.editing = true;
+    }else{
+      this.editing = false;
+    }
+
+  }
 
   presentLoadingDefault() {
     this.loading = this.loadingCtrl.create({
@@ -60,9 +74,13 @@ export class EditInfoPage {
   presentConfirm() {
     this.presentLoadingDefault();
     this.api.editProfile().toPromise().then( r=>{
+      this.editing = false;
+      this.api.currentUser = Object.assign(this.api.currentUser, this.tempUserInfo);
       this.loading.dismiss();
       console.log(r);
-    }).catch(e=>console.error(e));
+    }).catch(e=>{
+      console.error(e);      this.editing = false;
+    });
   }
 
   representPosition(p){
@@ -83,4 +101,7 @@ export class EditInfoPage {
 
   }
 
+  logout() {
+    this.broadcast.emit(new BroadcastData<string>("home","Logout",""))
+  }
 }

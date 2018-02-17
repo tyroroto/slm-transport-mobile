@@ -3,6 +3,7 @@ import {AlertController, Loading,LoadingController, NavController} from 'ionic-a
 import {EditInfoPage} from "../edit-info/edit-info";
 import {SchedulePage} from "../schedule/schedule";
 import {BroadcastData, BroadcastProvider} from "../../providers/broadcast/broadcast";
+import {LoginPage} from "../login/login";
 
 @Component({
   selector: 'page-home',
@@ -36,6 +37,9 @@ export class HomePage {
     if (event.target == "home") {
       if (event.objective == "SchedulePage") {
         this.navCtrl.push(SchedulePage);
+      }
+      if (event.objective == "Logout") {
+        this.navCtrl.setRoot(LoginPage);
       }
     }
   }

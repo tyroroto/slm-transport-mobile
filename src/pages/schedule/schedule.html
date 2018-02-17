@@ -17,6 +17,9 @@
 
 
 <ion-content no-padding="">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div>
     <h1 padding-left=""> รายการส่งสินค้า</h1>
     <!--<ion-list>-->
@@ -35,7 +38,8 @@
       <h1 *ngIf="worklist == null || worklist.length == 0" class="text-item-none" text-center="">
         ไม่มีงานมอบหมาย
       </h1>
-    <ion-card *ngFor="let w of worklist" style="margin-bottom:40px;padding-bottom: 6px">
+    <ion-card *ngFor="let w of worklist"  [ngStyle]="{'background-color': getSoftColor(w.status),'margin-bottom':'40px','padding-bottom':'6px'}">
+      <div [ngStyle]="{'height.px':5,'background-color': getColor(w.status)}"></div>
       <ion-card-content style="padding: 5px">
         <!--<ion-card-title style="width: 50%">-->
         <!--</ion-card-title>-->
@@ -44,7 +48,7 @@
 
         <ion-row>
           <ion-col col-6="">
-            <h1>{{w.date}}</h1>
+            <h1>{{w.date | amDateFormat: 'DD/MM/YYYY'}}</h1>
           </ion-col>
           <ion-col col-6="">
             <p text-right="">ID : {{w.assId}} </p>
@@ -63,23 +67,29 @@
         <h1 class="font-size-m" text-right="">
           {{w.deliveryLocation}}
         </h1>
-        <p class="font-size-s"> <u>พนักงานขับรถ </u> </p>
-        <h1 class="font-size-l" text-right=""> {{w.driver}}</h1>
-        <p class="font-size-s"> <u>โอเปอร์เรเตอร์ </u> </p>
+        <p class="font-size-s"> <u>วันที่กำหนดรับสินค้า</u> </p>
+        <h1 class="font-size-l" text-right=""> {{ w.recieveDate | amDateFormat: 'DD/MM/YYYY'}}</h1>
+        <p class="font-size-s"> <u>วันที่กำหนดส่งสินค้า</u> </p>
+        <h1 class="font-size-l" text-right=""> {{ w.deliveryDate | amDateFormat: 'DD/MM/YYYY'}}</h1>
+        <p class="font-size-s"> <u>ชื่อสินค้า </u> </p>
+        <h1 class="font-size-l" text-right=""> {{w.productName}}</h1>
+        <p class="font-size-s"> <u>ชื่อลูกค้า </u> </p>
         <h1 class="font-size-l" text-right=""> {{w.officer}}</h1>
-        <p class="font-size-s"> <u>ทะเบียนรถ</u> </p>
-        <h1 class="font-size-l" text-right=""> {{w.car}}</h1>
-        <p class="font-size-s"> <u>วันที่รับ-วันที่ส่ง</u> </p>
-        <h1 class="font-size-l" text-right=""> {{ w.recieveDate}} , {{w.deliveryDate}}</h1>
+
+        <!--<p class="font-size-s"> <u>ทะเบียนรถ</u> </p>-->
+        <!--<h1 class="font-size-l" text-right=""> {{w.car}}</h1>-->
         <hr>
         <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
         <!--<p> พักสินค้า 17-01-01 00:00 </p>-->
-        <p class="font-size-s"> <u>ยืนยันสถานะสินค้า </u> </p>
-        <button float-right ion-button="" *ngIf="w.status == null" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,0,'ยืนยันรับสินค้า')"> ยืนยันรับสินค้า</button>
-        <button float-right ion-button="" *ngIf="w.status == 0" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,2,'ยืนยันเริ่มต้นสินค้า')"> ยืนยันเริ่มต้นสินค้า</button>
-        <button float-right ion-button="" *ngIf="w.status == 0" class="stock-button" [default]="true"  round (click)="doPrompt(w,1)"> ยืนยันพักสินค้า</button>
-        <button float-right ion-button="" *ngIf="w.status == 1 || w.status == 2 " class="confirm-button" [default]="true"  round (click)="presentConfirm(w,3,'ยืนยันสินค้าถึงปลายทาง')"> ยืนยันสินค้าถึงปลายทาง</button>
-        <ion-label class="font-size-xl" color="secondary" text-right="" *ngIf="w.status == 3"> ส่งสินค้าแล้วเรียบร้อยแล้ว</ion-label>
+        <p class="font-size-s" *ngIf="w.receiveLog != null"> <u>บันทึกรับสินค้าเมื่อ </u> <span float-right="">{{w.receiveLog | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span></p>
+        <p class="font-size-s" *ngIf="w.storedLogs != null"> <u>บันทึกพักสินค้าเมื่อ </u> <span float-right="">{{w.storedLogs | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span></p>
+        <p class="font-size-s" *ngIf="w.startSendlogs != null"> <u>บันทึกจุดเริ่มต้นสินค้าเมื่อ </u> <span float-right="">{{w.startSendlogs | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span></p>
+        <p class="font-size-s" *ngIf="w.finishLogs != null"> <u>บันทึกส่งสินค้าเมื่อ </u> <span float-right="">{{w.finishLogs | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span></p>
+        <button float-right ion-button="" [ngStyle]="{'background-color': getColor(0)}" *ngIf="w.status == null" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,0,'บันทึกรับสินค้า')"> บันทึกรับสินค้า</button>
+        <button float-right ion-button="" [ngStyle]="{'background-color': getColor(2)}" *ngIf="w.status == 0" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,2,'บันทึกเริ่มต้นสินค้า')"> บันทึกเริ่มต้นสินค้า</button>
+        <button float-right ion-button="" [ngStyle]="{'background-color': getColor(1)}" *ngIf="w.status == 0" class="stock-button" [default]="true"  round (click)="doPrompt(w,1)"> บันทึกพักสินค้า</button>
+        <button float-right ion-button="" [ngStyle]="{'background-color': getColor(3)}" *ngIf="w.status == 1 || w.status == 2 " class="confirm-button" [default]="true"  round (click)="presentConfirm(w,3,'บันทึกสินค้าถึงปลายทาง')"> บันทึกสินค้าถึงปลายทาง</button>
+        <ion-label class="font-size-xl" [ngStyle]="{'color': '#FFCC00'}" text-right="" *ngIf="w.status == 3"> ส่งสินค้าแล้วเรียบร้อยแล้ว</ion-label>
 
       </ion-card-content>
     </ion-card>

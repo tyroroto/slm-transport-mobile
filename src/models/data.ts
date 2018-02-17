@@ -8,6 +8,7 @@ export class User {
   public pos;
   public user;
   public name;
+  public carId;
   type: any;
 
   constructor(){
@@ -22,14 +23,20 @@ export class Worklist {
   public status;
   public payment;
   public packages : Array<Package>;
+  public receiveLog;
+  public startSendlogs;
+  public storedLogs;
+  public storedLocationLogs;
+  public finishLogs;
   driver: string;
   officer: string;
   date: string;
   car: string;
-  deliveryDate: Date;
-  recieveDate: Date;
+  deliveryDate: string;
+  recieveDate: string;
   deliveryLocation: string;
   recieveLocation: string;
+  productName: string;
 
   constructor(id,payment,status){
     this.id = id;

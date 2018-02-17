@@ -34,7 +34,12 @@ export class SchedulePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SchedulePage');
-    this.api.getWorklist().toPromise().then(r  => {
+    this.loadData();
+  }
+
+  async loadData(){
+    this._worklist = [];
+    await this.api.getWorklist().toPromise().then(r  => {
       console.log(r);
       let arr : Array<any> = r as Array<any>;
       for(let item of arr){
@@ -44,17 +49,29 @@ export class SchedulePage {
         w.date=item["order"]["Ors_date"];// new Date().toLocaleDateString();
         w.status = item["Ass_status"] == null ? null : parseInt(item["Ass_status"]);
         w.deliveryDate = item["order"]["Ors_deliverydate"];//new Date();
-        w.recieveDate =  item["order"]["Ors_deliverydateget"]//new Date();
+        w.recieveDate =  item["order"]["Ors_deliverydateget"];//new Date();
         w.deliveryLocation = item["order"]["Ors_place"];
         w.recieveLocation = item["order"]["Ors_delivery"];
         w.assId= item["Ass_id"];
-        w.car= "บท-7873";
+        w.productName= item["product"]["List_name"];
+
+        w.receiveLog = item["logs"]["receive_log"] ? item["logs"]["receive_log"]["Pro_date"] : null;
+        w.startSendlogs = item["logs"]["start_send_log"] ? item["logs"]["start_send_log"]["Sta_date"] : null;
+        w.storedLogs = item["logs"]["stored_log"] ? item["logs"]["stored_log"]["Sto_date"] : null;
+        w.storedLocationLogs = item["logs"]["stored_log"] ? item["logs"]["stored_log"]["Sto_room"] : null;
+        w.finishLogs = item["logs"]["finish_log"] ? item["logs"]["finish_log"]["Des_date"] : null;
+        // w.car= "บท-7873";
         console.log(w);
         this._worklist.push(w);
       }
       this.worklist = this._worklist;
-
     })
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.loadData().then(r=>       refresher.complete());
+
   }
 
   onSearch($event: UIEvent) {
@@ -70,32 +87,56 @@ export class SchedulePage {
     // },2000);
   }
 
+  presentConfirm(w : Worklist,status,t) {
+    let alert = this.alertCtrl.create({
+      title: t,
+      subTitle: 'ID:'+w.assId+'<p> ชื่อสินค้า </p>'+`<h2> ${w.productName} </h2>`,
+      buttons: [
+        {
+          text: 'ยืนยัน',
+          handler: () => {
+            console.log('confirm');
+            this.updateStatus(w,status,"")
+          }
+        },
+        {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 
 
   doPrompt(w : Worklist,status) {
     let alert = this.alertCtrl.create({
       title: 'ยืนยันการพักสินค้า',
-      message: 'กรุณาใส่สถานที่และกดยืนยัน',
+      subTitle: '<u>กรุณาใส่สถานที่</u>และกดยืนยัน',
       inputs: [
         {
           name: 'place',
-          placeholder: 'สถานที่พักสินค้า'
+          placeholder: 'กรุณาใส่ สถานที่พักสินค้า'
         },
       ],
       buttons: [
         {
-          text: 'Cancel',
-          handler: () => {
-            console.log('Cancel clicked');
+          text: 'ยืนยัน',
+          handler: data => {
+            if(data.place == null || data.place.length < 1 ) return false;
+            this.updateStatus(w,status,data.place)
           }
         },
         {
-          text: 'Confirm',
-          handler: data => {
-            console.log(data.place);
-            this.updateStatus(w,status,data.place)
+          text: 'ยกเลิก',
+          handler: () => {
+            console.log('Cancel clicked');
           }
         }
+
       ]
     });
 
@@ -134,29 +175,6 @@ export class SchedulePage {
     alert.present(prompt).then();
   }
 
-  presentConfirm(w : Worklist,status,t) {
-    let alert = this.alertCtrl.create({
-      title: t,
-      // message: '',
-      buttons: [
-        {
-          text: 'ยกเลิก',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'ยืนยัน',
-          handler: () => {
-            console.log('confirm');
-            this.updateStatus(w,status,"")
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
 
   presentSuccess() {
     let alert = this.alertCtrl.create({
@@ -173,11 +191,57 @@ export class SchedulePage {
     alert.present();
   }
 
+  getColor(s){
+    switch (s){
+      case 0 :
+        return "#4CAF50";
+      case 1 :
+        return "#ab78ff";
+      case 2 :
+        return "#66a3ff";
+      case 3 :
+        return "#FFCC00";
+      default:
+        return '#ff3300';
+    }
+  }
+
+  getSoftColor(s){
+    switch (s){
+      case 0 :
+        return "#eeffee";
+      case 1 :
+        return "#faefff";
+      case 2 :
+        return "#f0faff";
+      case 3 :
+        return "#fdffe0";
+      default:
+        return "#fff5ea";
+    }
+  }
 
   updateStatus(w : Worklist,status,t){
     this.presentLoadingDefault();
     this.api.updateStatus(w.assId,status,t).toPromise().then( r=> {
+      console.log (r);
+      switch (status){
+        case 0:
+          w.receiveLog = r["Pro_date"];
+          break;
+        case 1:
+          w.storedLogs = r["Sto_date"];
+          break;
+        case 2:
+          w.startSendlogs = r["Sta_date"];
+          break;
+        case 3:
+          w.finishLogs = r["Des_date"];
+          break;
+      }
       w.status = status;
+      console.log(w);
+
       this.loading.dismiss().catch(e=>console.error(e));
       this.presentSuccess();
     }).catch(e => {

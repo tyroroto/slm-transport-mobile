@@ -41,8 +41,8 @@ export class LoginPage {
   signin() {
     // if(this.user.value == "admin" && this.pass.value == "1234"){
     if (this.user.length == 1) {
-      this.lds.username = "1100501040231";
-      this.lds.password = "0123456789";
+      this.lds.username = "aomluk";
+      this.lds.password = "1111";
     } else {
       this.lds.username = this.user;
       this.lds.password = this.pass;
