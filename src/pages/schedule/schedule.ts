@@ -34,7 +34,7 @@ export class SchedulePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SchedulePage');
-    this.loadData();
+    this.loadData().catch(e=>console.error(e));
   }
 
   async loadData(){
@@ -70,7 +70,9 @@ export class SchedulePage {
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    this.loadData().then(r=>       refresher.complete());
+    this.loadData().then(r=> refresher.complete()).catch(e=>{
+      console.error(e);refresher.complete()
+    });
 
   }
 
