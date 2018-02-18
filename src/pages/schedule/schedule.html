@@ -16,7 +16,7 @@
 <!--</ion-header>-->
 
 
-<ion-content no-padding="">
+<ion-content >
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -87,9 +87,9 @@
           <p class="font-size-s" *ngIf="w.startSendlogs != null"> <u>บันทึกจุดเริ่มต้นสินค้าเมื่อ </u> <span float-right="">{{w.startSendlogs | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span></p>
           <p class="font-size-s" *ngIf="w.finishLogs != null"> <u>บันทึกส่งสินค้าเมื่อ </u> <span float-right="">{{w.finishLogs | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span></p>
           <button float-right ion-button="" [ngStyle]="{'background-color': getColor(0)}" *ngIf="w.status == null" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,0,'บันทึกรับสินค้า')"> บันทึกรับสินค้า</button>
-          <button float-right ion-button="" [ngStyle]="{'background-color': getColor(2)}" *ngIf="w.status == 0" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,2,'บันทึกเริ่มต้นสินค้า')"> บันทึกเริ่มต้นสินค้า</button>
+          <button float-right ion-button="" [ngStyle]="{'background-color': getColor(2)}" *ngIf="w.status == 0 || w.status == 1" class="confirm-button" [default]="true"  round (click)="presentConfirm(w,2,'บันทึกเริ่มต้นสินค้า')"> บันทึกเริ่มต้นสินค้า</button>
           <button float-right ion-button="" [ngStyle]="{'background-color': getColor(1)}" *ngIf="w.status == 0" class="stock-button" [default]="true"  round (click)="doPrompt(w,1)"> บันทึกพักสินค้า</button>
-          <button float-right ion-button="" [ngStyle]="{'background-color': getColor(3)}" *ngIf="w.status == 1 || w.status == 2 " class="confirm-button" [default]="true"  round (click)="presentConfirm(w,3,'บันทึกสินค้าถึงปลายทาง')"> บันทึกสินค้าถึงปลายทาง</button>
+          <button float-right ion-button="" [ngStyle]="{'background-color': getColor(3)}" *ngIf="w.status == 2 " class="confirm-button" [default]="true"  round (click)="presentConfirm(w,3,'บันทึกสินค้าถึงปลายทาง')"> บันทึกสินค้าถึงปลายทาง</button>
         </div>
 
         <ion-label class="font-size-xl" [ngStyle]="{'color': '#FFCC00'}" text-right="" *ngIf="w.status == 3"> ส่งสินค้าแล้วเรียบร้อยแล้ว</ion-label>

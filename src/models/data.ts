@@ -1,4 +1,3 @@
-import {Package} from "../pages/home-user/home-user";
 
 export class User {
   public id;
@@ -9,7 +8,10 @@ export class User {
   public user;
   public name;
   public carId;
-  type: any;
+  type: string;
+  address: string;
+  email: string;
+  company: string;
 
   constructor(){
   }
@@ -22,7 +24,6 @@ export class Worklist {
   public assId;
   public status;
   public payment;
-  public packages : Array<Package>;
   public receiveLog;
   public startSendlogs;
   public storedLogs;
@@ -38,15 +39,54 @@ export class Worklist {
   recieveLocation: string;
   productName: string;
 
-  constructor(id,payment,status){
+  constructor(id,payment){
     this.id = id;
     this.payment = payment;
-    switch(status){
-      case 0 : this.status = "รอการชำระเงิน";break;
-      case 1 : this.status = "อยู่ระหว่างดำเนินงาน";break;
-      case 2 : this.status = "เสร็จสิ้นแล้ว";break;
-    }
+  }
+}
 
+
+export class Order{
+  public id;
+  public status;
+  public payment;
+  public packages : Array<Package>;
+  driver: string;
+  officer: string;
+  date: string;
+  car: string;
+  deliveryDate: string;
+  recieveDate: string;
+  deliveryLocation: string;
+  recieveLocation: string;
+  constructor(id,payment){
+    this.id = id;
+    this.payment = payment;
+  }
+}
+
+
+
+export class Package {
+  public id;
+  public name;
+  public statusText;
+  public status;
+  public receiveLog;
+  public startSendlogs;
+  public storedLogs;
+  public storedLocationLogs;
+  public finishLogs;
+  constructor(id,name,status,){
+    this.id = id;
+    this.name = name;
+    switch(status){
+      case 0 : this.statusText = "กำลังไปรับสินค้า";break;
+      case 1 : this.statusText = "ได้รับสินค้าแล้ว";break;
+      case 2 : this.statusText = "อยู่ระหว่างพักสินค้า";break;
+      case 3 : this.statusText = "กำลังจัดส่งสินค้า";break;
+      case 4 : this.statusText = "จัดส่งเรียบร้อยแล้ว";break;
+    }
   }
 }
 

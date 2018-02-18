@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Package} from "../home-user/home-user";
+import { NavController, NavParams } from 'ionic-angular';
+import {Package} from "../../models/data";
+
 
 /**
  * Generated class for the PackageStatusPage page.

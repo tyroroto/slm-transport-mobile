@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-content>
+<ion-content no-padding="">
   <ion-item>
     <ion-label class="font-size-l">
       ข้อมูลผู้ใช้
@@ -13,7 +13,7 @@
       {{ editing ? "ยกเลิก": "แก้ไข"}}
     </button>
   </ion-item>
-  <ion-list *ngIf="editing" padding>
+  <ion-list *ngIf="editing">
     <ion-item>
       <ion-label>
         User ID
@@ -23,7 +23,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
         ตำแหน่ง
       </ion-label>
@@ -45,27 +45,51 @@
         <ion-option value="1">หญิง</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
         เลขบัตรประชาชน
       </ion-label>
       <ion-input text-right="" type="text" [(ngModel)]="tempUserInfo.cid"></ion-input>
     </ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='cus'">
+      <ion-label>
+        E-mail
+      </ion-label>
+      <ion-input text-right="" type="text" [(ngModel)]="tempUserInfo.email"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='cus'">
+      <ion-label>
+        ที่อยู่
+      </ion-label>
+      <ion-input text-right="" type="text" [(ngModel)]="tempUserInfo.address"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='cus'">
+      <ion-label>
+        ชื่อบริษัท
+      </ion-label>
+      <ion-input text-right="" type="text" [(ngModel)]="tempUserInfo.company"></ion-input>
+    </ion-item>
+
     <ion-item>
       <ion-label>
         เบอร์โทรศัพท์
       </ion-label>
       <ion-input text-right="" type="tel" [(ngModel)]="tempUserInfo.tel"></ion-input>
     </ion-item>
-    <ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
         ทะเบียนรถ
       </ion-label>
-      <ion-input text-right="" type="tel" [(ngModel)]="tempUserInfo.carId"></ion-input>
+      <ion-input text-right="" type="text" [(ngModel)]="tempUserInfo.carId"></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="!editing" padding>
+  <ion-list no-padding="" *ngIf="!editing">
     <ion-item>
       <ion-label>
         User ID
@@ -75,7 +99,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
         ตำแหน่ง
       </ion-label>
@@ -99,7 +123,8 @@
 
       </ion-label>
     </ion-item>
-    <ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
         เลขบัตรประชาชน
       </ion-label>
@@ -107,6 +132,34 @@
         {{api.currentUser.cid}}
       </ion-label>
     </ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='cus'">
+      <ion-label>
+        E-mail
+      </ion-label>
+      <ion-label text-wrap=""  text-right="">
+        {{api.currentUser.email}}
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='cus'">
+      <ion-label>
+        ที่อยู่
+      </ion-label>
+      <ion-label text-wrap="" text-right="">
+        {{api.currentUser.address}}
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='cus'">
+      <ion-label>
+          ชื่อบริษัท
+      </ion-label>
+      <ion-label text-wrap="" text-right="">
+        {{api.currentUser.company}}
+      </ion-label>
+    </ion-item>
+
     <ion-item>
       <ion-label>
         เบอร์โทรศัพท์
@@ -115,7 +168,8 @@
         {{api.currentUser.tel}}
       </ion-label>
     </ion-item>
-    <ion-item>
+
+    <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
         ทะเบียนรถ
       </ion-label>

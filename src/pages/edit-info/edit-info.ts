@@ -50,10 +50,6 @@ export class EditInfoPage {
     });
 
     this.loading.present().catch(e => console.error(e));
-
-    setTimeout(() => {
-      this.navCtrl.pop();
-    }, 5000);
   }
 
   dismissLoading() {

@@ -1,25 +1,85 @@
 <ion-content>
   <div>
-    <h1> รายการส่งสินค้า</h1>
-    <ion-list no-padding="">
-      <ion-item *ngFor="let p of packages">
-        <h1> {{p.name}}</h1>
-        <p> ID:{{p.id}} ( 01-01-2017 )</p>
+    <h1 padding-left=""> รายการส่งสินค้า</h1>
 
+    <h1 *ngIf="orders == null || orders.length == 0" class="text-item-none" text-center="">
+      ไม่มีงานมอบหมาย
+    </h1>
+
+    <ion-card *ngFor="let pa of orders">
+      <ion-row>
+        <ion-col col-6="">
+          <h1 padding-left="">{{pa.date | amDateFormat: 'DD/MM/YYYY'}}</h1>
+        </ion-col>
+        <ion-col col-6="">
+          <p text-right="">ID : {{pa.id}} </p>
+        </ion-col>
+      </ion-row>
+      <ion-item>
+        <!--<h1> {{pa.packages[0].name}}</h1>-->
+
+        <p class="font-size-s"><u>วันที่กำหนดส่งสินค้า</u></p>
+        <h1 class="font-size-l" text-right=""> {{ pa.deliveryDate | amDateFormat: 'DD/MM/YYYY'}}</h1>
+        <p class="font-size-s"><u>ชื่อสินค้า </u></p>
+        <h1 class="font-size-l" text-right=""> {{pa.packages[0].name}}</h1>
+
+        <!--<h2 class="info-text">-->
+        <!--วันที่ทำรายการ: 02-02-2017-->
+        <!--</h2>-->
+        <!--<h2 class="info-text">-->
+        <!--วันที่ส่ง: 02-02-2017-->
+        <!--</h2>-->
         <h2 class="info-text">
-          วันที่ทำรายการ: 02-02-2017
+          {{pa.status}}
         </h2>
-        <h2 class="info-text">
-          วันที่ส่ง: 02-02-2017
-        </h2>
-        <h2 class="info-text">
-          {{p.status}}
-        </h2>
-        <button item-end="" ion-button="" (click)="viewPackage(p)">
+        <button item-end="" ion-button="" clear (click)="viewPackage(p)">
           View
         </button>
       </ion-item>
+    </ion-card>
+
+    <ion-list no-padding="">
+
 
     </ion-list>
+
+    <!--<ion-card *ngFor="let pa of orders" [ngStyle]="{'background-color': getSoftColor(pa.status),'margin-bottom':'40px','padding-bottom':'6px'}" >-->
+    <!--&lt;!&ndash;//&ndash;&gt;-->
+    <!--<div [ngStyle]="{'height.px':5,'background-color': getColor(pa.status)}"></div>-->
+    <!--<ion-card-content style="padding: 5px">-->
+    <!--&lt;!&ndash;<ion-card-title style="width: 50%">&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-card-title>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-label text-right="" no-margin=""> </ion-label>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-label item-start="" no-margin> </ion-label>&ndash;&gt;-->
+
+    <!--<ion-row>-->
+    <!--<ion-col col-6="">-->
+    <!--<h1>{{pa.date | amDateFormat: 'DD/MM/YYYY'}}</h1>-->
+    <!--</ion-col>-->
+    <!--<ion-col col-6="">-->
+    <!--<p text-right="">ID : {{pa.id}} </p>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!--&lt;!&ndash;<h2 text-right=""> <b>{{p.name}}</b></h2>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<ion-item>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-item>&ndash;&gt;-->
+    <!--<hr>-->
+    <!--<p class="font-size-s"> <u>วันที่กำหนดส่งสินค้า</u> </p>-->
+    <!--<h1 class="font-size-l" text-right=""> {{ pa.deliveryDate | amDateFormat: 'DD/MM/YYYY'}}</h1>-->
+    <!--<p class="font-size-s"> <u>ชื่อสินค้า </u> </p>-->
+    <!--<h1 class="font-size-l" text-right=""> {{pa.packages[0].name}}</h1>-->
+
+    <!--<hr>-->
+    <!--&lt;!&ndash;<p> พักสินค้า 17-01-01 00:00 </p>&ndash;&gt;-->
+    <!--&lt;!&ndash;<p> พักสินค้า 17-01-01 00:00 </p>&ndash;&gt;-->
+    <!--<div>-->
+    <!--<ion-label class="font-size-xl" [ngStyle]="{'color': '#FFCC00'}" text-right="" *ngIf="pa.status == 3"> ส่งสินค้าแล้วเรียบร้อยแล้ว</ion-label>-->
+    <!--<ion-label class="font-size-xl" [ngStyle]="{'color': '#FFCC00'}" text-right="" *ngIf="pa.status == 0"> อยู่ระหว่างจัดส่ง</ion-label>-->
+    <!--</div>-->
+
+
+    <!--</ion-card-content>-->
+    <!--</ion-card>-->
   </div>
 </ion-content>

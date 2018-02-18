@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import  {Component} from '@angular/core';
 import {AlertController, Loading,LoadingController, NavController} from 'ionic-angular';
 import {EditInfoPage} from "../edit-info/edit-info";
 import {SchedulePage} from "../schedule/schedule";

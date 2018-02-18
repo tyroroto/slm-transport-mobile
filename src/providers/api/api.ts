@@ -31,6 +31,7 @@ export class ApiProvider {
     return this.http.post("api/api_login.php",form,{responseType: 'text'});
   }
 
+
   public getWorklist(){
     let form = new FormData();
     form.append("password" , this.password );
@@ -48,6 +49,7 @@ export class ApiProvider {
     form.append("Emp_tel" , this.currentUser.tel );
     form.append("Emp_sex" , this.currentUser.gender );
     form.append("Emp_card" , this.currentUser.cid );
+    form.append("Car_id" , this.currentUser.carId );
     form.append("type" , "employee");
     //type='customer' ,Cus_id ,Cus_name ,Cus_tel ,Cus_sex
     return this.http.post("api/api_edit_profile.php",form);

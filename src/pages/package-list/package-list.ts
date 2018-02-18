@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Package} from "../home-user/home-user";
 import {PackageStatusPage} from "../package-status/package-status";
 import {ApiProvider} from "../../providers/api/api";
+import {Package} from "../../models/data";
 
 /**
  * Generated class for the PackageListPage page.

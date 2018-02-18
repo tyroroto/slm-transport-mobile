@@ -5,6 +5,8 @@ import {
 } from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {ApiProvider} from "../../providers/api/api";
+import {HomeUserPage} from "../home-user/home-user";
+import {User} from "../../models/data";
 
 @Component({
   selector: 'page-login',
@@ -37,35 +39,46 @@ export class LoginPage {
   }
 
 
-
   signin() {
     // if(this.user.value == "admin" && this.pass.value == "1234"){
     if (this.user.length == 1) {
-      this.lds.username = "aomluk";
+      this.lds.username = "violet";
       this.lds.password = "1111";
     } else {
       this.lds.username = this.user;
       this.lds.password = this.pass;
     }
     this.presentLoadingDefault();
-    this.api.login(this.lds.username,this.lds.password).toPromise().then( response=>{
-      try{
-
+    this.api.currentUser = new User();
+    this.api.login(this.lds.username, this.lds.password).toPromise().then(response => {
+      try {
         response = JSON.parse(response);
         console.log(response);
-        this.api.currentUser.id = response["Emp_id"];
-        this.api.currentUser.cid = response["Emp_card"];
-        this.api.currentUser.name = response["Emp_name"];
-        this.api.currentUser.tel = response["Emp_tel"];
-        this.api.currentUser.pos = response["Emp_pos"];
-        this.api.currentUser.type = response["Emp_type"];
-        this.api.currentUser.gender = response["Emp_sex"];
-        if(this.api.role == "user") {
-          this.navCtrl.setRoot(HomePage);
+        this.api.currentUser.type = response["type"];
+        if (this.api.currentUser.type == "emp") {
+          this.api.currentUser.id = response["Emp_id"];
+          this.api.currentUser.cid = response["Emp_card"];
+          this.api.currentUser.name = response["Emp_name"];
+          this.api.currentUser.tel = response["Emp_tel"];
+          this.api.currentUser.pos = response["Emp_pos"];
+          this.api.currentUser.carId = response["Car_id"];
+          this.api.currentUser.gender = response["Emp_sex"];
         }else{
+          this.api.currentUser.id = response["Cus_id"];
+          this.api.currentUser.name = response["Cus_name"];
+          this.api.currentUser.address = response["Cus_add"];
+          this.api.currentUser.email = response["Cus_mail"];
+          this.api.currentUser.company = response["Cus_company"];
+          this.api.currentUser.tel = response["Cus_tel"];
+          this.api.currentUser.gender = response["Cus_sex"];
+        }
+        this.api.role = response["type"];
+        if (this.api.role == "cus") {
+          this.navCtrl.setRoot(HomeUserPage);
+        } else {
           this.navCtrl.setRoot(HomePage);
         }
-      }catch (e){
+      } catch (e) {
         this.showError(response);
       }
 

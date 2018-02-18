@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {  NavController, NavParams } from 'ionic-angular';
 import {BroadcastData, BroadcastProvider} from "../../providers/broadcast/broadcast";
-import {Worklist} from "../../models/data";
+import {Order, Package, Worklist} from "../../models/data";
+import {ApiProvider} from "../../providers/api/api";
 
 /**
  * Generated class for the OrderListPage page.
@@ -16,23 +17,109 @@ import {Worklist} from "../../models/data";
 })
 export class OrderListPage {
 
-  packages: Array<Worklist> = [
-    new Worklist("0001", 0,0),
-    new Worklist("0002", 1,1),
-    new Worklist("0003", 2,2),
-    new Worklist("0004", 3,1),
-  ];
-  constructor(public navCtrl: NavController, public navParams: NavParams,public broadcast: BroadcastProvider) {
+  orders: Array<Order> = [  ];
+  _orders: Array<Order> = [   ];
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public api: ApiProvider,
+              public broadcast: BroadcastProvider) {
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad SchedulePage');
+    this.loadData().catch(e=>console.error(e));
+  }
+
+  async loadData(){
+    this._orders = [];
+    await this.api.getWorklist().toPromise().then(r  => {
+      console.log(r);
+      let arr : Array<any> = r as Array<any>;
+      for(let item of arr){
+        let w = new Order(item["order"]["Ors_id"], 0);
+        w.driver =  item["Emp_car"];
+        w.officer= item["Emp_oper"];
+        w.date=item["order"]["Ors_date"];// new Date().toLocaleDateString();
+        w.status = item["order"]["Ors_status"] == null ? 0 : parseInt(item["Ors_status"]);
+        w.deliveryDate = item["order"]["Ors_deliverydate"];//new Date();
+        w.recieveDate =  item["order"]["Ors_deliverydateget"];//new Date();
+        w.deliveryLocation = item["order"]["Ors_place"];
+        w.recieveLocation = item["order"]["Ors_delivery"];
+
+        w.packages = [];
+        let p =  new Package(item["Ass_id"], item["product"]["List_name"],item["Ass_status"]);
+        p.receiveLog = item["logs"]["receive_log"] ? item["logs"]["receive_log"]["Pro_date"] : null;
+        p.startSendlogs = item["logs"]["start_send_log"] ? item["logs"]["start_send_log"]["Sta_date"] : null;
+        p.storedLogs = item["logs"]["stored_log"] ? item["logs"]["stored_log"]["Sto_date"] : null;
+        p.storedLocationLogs = item["logs"]["stored_log"] ? item["logs"]["stored_log"]["Sto_room"] : null;
+        p.finishLogs = item["logs"]["finish_log"] ? item["logs"]["finish_log"]["Des_date"] : null;
+        w.packages.push(p);
+        // w.car= "บท-7873";
+        console.log(w);
+        this._orders.push(w);
+      }
+      this.orders = this._orders;
+      console.log(this.orders)
+    })
   }
 
 
-  viewPackage( p : Worklist){
-    this.broadcast.emit(new BroadcastData<Worklist>("home" ,"viewPackage",p));
+  viewPackage( p : Package){
+    this.broadcast.emit(new BroadcastData<Package>("home" ,"viewPackage",p));
   }
 
-  ionViewDidLoad(){
-    console.log("loaded")
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.loadData().then(r=> refresher.complete()).catch(e=>{
+      console.error(e);refresher.complete()
+    });
+
+  }
+  searchInput;
+
+  onSearch($event: UIEvent) {
+    // this.isLoading = true;
+    this.orders = [];
+    for(let w of this._orders){
+      if(w.id.includes(this.searchInput)){
+        this.orders.push(w);
+      }
+    }
+    // setTimeout( () => {
+    // this.isLoading = false
+    // },2000);
   }
 
+
+  getColor(s){
+    switch (s){
+      case 0 :
+        return "#4CAF50";
+      case 1 :
+        return "#ab78ff";
+      case 2 :
+        return "#66a3ff";
+      case 3 :
+        return "#FFCC00";
+      default:
+        return '#ff3300';
+    }
+  }
+
+  getSoftColor(s){
+    switch (s){
+      case 0 :
+        return "#eeffee";
+      case 1 :
+        return "#faefff";
+      case 2 :
+        return "#f0faff";
+      case 3 :
+        return "#fdffe0";
+      default:
+        return "#fff5ea";
+    }
+  }
 
 }

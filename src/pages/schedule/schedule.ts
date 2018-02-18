@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {ApiProvider} from "../../providers/api/api";
-import {EditInfoPage} from "../edit-info/edit-info";
 import {Worklist} from "../../models/data";
 
 /**
@@ -43,7 +42,7 @@ export class SchedulePage {
       console.log(r);
       let arr : Array<any> = r as Array<any>;
       for(let item of arr){
-        let w = new Worklist(item["order"]["Ors_id"], 0,item["order"]["Ors_status"]);
+        let w = new Worklist(item["order"]["Ors_id"], 0);
         w.driver =  item["Emp_car"];
         w.officer= item["Emp_oper"];
         w.date=item["order"]["Ors_date"];// new Date().toLocaleDateString();
@@ -163,9 +162,6 @@ export class SchedulePage {
     this.loading.dismiss().catch(e => console.error(e));
   }
 
-  openEditInfo(){
-    this.navCtrl.push(EditInfoPage);
-  }
 
   showError() {
     this.loading.dismiss().then();

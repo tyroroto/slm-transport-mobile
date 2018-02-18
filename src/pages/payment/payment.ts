@@ -17,12 +17,12 @@ export class PaymentPage {
 
 
   worklist: Array<Worklist> = [
-    new Worklist("0001", 0,0),
-    new Worklist("0002", 1,0),
-    new Worklist("0003", 1,0),
-    new Worklist("0004",1,0),
-    new Worklist("0005", 1,0),
-    new Worklist("0006", 1,0),
+    new Worklist("0001", 0),
+    new Worklist("0002", 1),
+    new Worklist("0003", 1),
+    new Worklist("0004",1),
+    new Worklist("0005", 1),
+    new Worklist("0006", 1),
   ];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
