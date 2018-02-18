@@ -69,9 +69,9 @@ export class EditInfoPage {
 
   presentConfirm() {
     this.presentLoadingDefault();
+    this.api.currentUser = Object.assign(this.api.currentUser, this.tempUserInfo);
     this.api.editProfile().toPromise().then( r=>{
       this.editing = false;
-      this.api.currentUser = Object.assign(this.api.currentUser, this.tempUserInfo);
       this.loading.dismiss();
       console.log(r);
     }).catch(e=>{
