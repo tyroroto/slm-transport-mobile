@@ -97,7 +97,5 @@ export class EditInfoPage {
 
   }
 
-  logout() {
-    this.broadcast.emit(new BroadcastData<string>("home","Logout",""))
-  }
+
 }

@@ -83,7 +83,7 @@
 
     <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
-        ทะเบียนรถ
+        ทะเบียนรถลาก
       </ion-label>
       <ion-input text-right="" type="text" [(ngModel)]="tempUserInfo.carId"></ion-input>
     </ion-item>
@@ -171,7 +171,7 @@
 
     <ion-item *ngIf="api.currentUser.type=='emp'">
       <ion-label>
-        ทะเบียนรถ
+        ทะเบียนรถลาก
       </ion-label>
       <ion-label text-right="">
         {{api.currentUser.carId}}
@@ -179,7 +179,6 @@
     </ion-item>
 
   </ion-list>
-  <button margin-right="" ion-button float-right="" color="danger"  *ngIf="!editing" (click)="logout()"> Logout</button>
 
   <div style="margin-left: 20%;margin-right: 20%;padding-top: 10px;" *ngIf="editing">
     <button ion-button large class="submit-btn" full round (click)="presentConfirm()"> บันทึก</button>

@@ -52,6 +52,8 @@ export class ApiProvider {
     form.append("Car_id" , this.currentUser.carId );
     form.append("type" , "employee");
     //type='customer' ,Cus_id ,Cus_name ,Cus_tel ,Cus_sex
+    console.log(form);
+
     return this.http.post("api/api_edit_profile.php",form);
 
   }
