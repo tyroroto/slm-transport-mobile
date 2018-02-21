@@ -49,7 +49,7 @@ export class ApiProvider {
     form.append("Emp_tel" , this.currentUser.tel );
     form.append("Emp_sex" , this.currentUser.gender );
     form.append("Emp_card" , this.currentUser.cid );
-    form.append("Car_id" , this.currentUser.carId );
+    form.append("Car_name" , this.currentUser.carName);
     form.append("type" , "employee");
     //type='customer' ,Cus_id ,Cus_name ,Cus_tel ,Cus_sex
     console.log(form);

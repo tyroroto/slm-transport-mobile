@@ -8,6 +8,7 @@ export class User {
   public user;
   public name;
   public carId;
+  public carName;
   type: string;
   address: string;
   email: string;

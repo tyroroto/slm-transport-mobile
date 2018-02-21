@@ -62,6 +62,7 @@ export class LoginPage {
           this.api.currentUser.tel = response["Emp_tel"];
           this.api.currentUser.pos = response["Emp_pos"];
           this.api.currentUser.carId = response["Car_id"];
+          this.api.currentUser.carName = response["car"]?response["car"]["Car_name"] : "";
           this.api.currentUser.gender = response["Emp_sex"];
         }else{
           this.api.currentUser.id = response["Cus_id"];
