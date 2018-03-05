@@ -114,6 +114,38 @@ export class SchedulePage {
   }
 
 
+  doPromptFinish(w : Worklist,status) {
+    let alert = this.alertCtrl.create({
+      title: 'ยืนยันสินค้าถึงปลายทาง',
+      subTitle: '<u>กรุณาใส่ชื่อผู้รับสินค้า</u>และกดยืนยัน',
+      inputs: [
+        {
+          name: 'receiver',
+          placeholder: 'กรุณาใส่ชื่อผู้รับสินค้า'
+        },
+      ],
+      buttons: [
+        {
+          text: 'ยืนยัน',
+          handler: data => {
+            if(data.receiver == null || data.receiver.length < 1 ) return false;
+            this.updateStatus(w,status,data.receiver);
+          }
+        },
+        {
+          text: 'ยกเลิก',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+
+      ]
+    });
+
+    alert.present();
+  }
+
+
   doPrompt(w : Worklist,status) {
     let alert = this.alertCtrl.create({
       title: 'ยืนยันการพักสินค้า',
@@ -141,7 +173,7 @@ export class SchedulePage {
           text: 'ยืนยัน',
           handler: data => {
             if(data == undefined) return false;
-              this.updateStatus(w,status,data.place)
+              this.updateStatus(w,status,data)
           }
         },
         {
