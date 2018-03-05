@@ -47,8 +47,8 @@ page-package-status {
   .container::after {
     content: '';
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 15px;
+    height: 15px;
     right: -17px;
     background-color: white;
     border: 4px solid #FF9F55;
@@ -132,7 +132,7 @@ page-package-status {
 
     /* Make sure all circles are at the same spot */
     .left::after, .right::after {
-      left: 15px;
+      left: 19px;
     }
 
     /* Make all right containers behave like the left ones */

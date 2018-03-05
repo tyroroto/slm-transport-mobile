@@ -39,7 +39,7 @@
       <h1 *ngIf="worklist == null || worklist.length == 0" class="text-item-none" text-center="">
         ไม่มีงานมอบหมาย
       </h1>
-    <ion-card *ngFor="let w of worklist"  [ngStyle]="{'background-color': getSoftColor(w.status),'margin-bottom':'40px','padding-bottom':'6px'}">
+    <ion-card *ngFor="let w of worklist" [hidden]="w.status == 3" [ngStyle]="{'background-color': getSoftColor(w.status),'margin-bottom':'40px','padding-bottom':'6px'}">
       <div [ngStyle]="{'height.px':5,'background-color': getColor(w.status)}"></div>
       <ion-card-content style="padding: 5px">
         <!--<ion-card-title style="width: 50%">-->

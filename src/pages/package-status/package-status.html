@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Package Status</ion-title>
+    <ion-title>สถานะสินค้า</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -25,12 +25,14 @@
               <ion-list>
                 <h3 padding-left="">รับสินค้า</h3>
                 <hr>
-                <h2 padding-left="">กำลังไปรับสินค้า</h2>
+                <h2 class="font-size-l" *ngIf="package.receiveLog == null" padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
+                <h2 *ngIf="package.receiveLog != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
               </ion-list>
             </ion-col>
 
             <ion-col text-center="" col-3="">
-              <ion-icon padding-top="" style="font-size: 52px" class="icon-pack"  name="cube"></ion-icon>
+              <img *ngIf="package.receiveLog == null"  src="assets/imgs/step1.png" />
+              <img *ngIf="package.receiveLog != null"  src="assets/imgs/step1-done.png" />
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -43,17 +45,17 @@
           <ion-row>
             <ion-col col-9="">
               <ion-list>
-                <ion-item>
-                  พักสินค้า
-                </ion-item>
-                <ion-item>
-                  รอดำเนินงาน
-                </ion-item>
+               <h3 padding-left>พักสินค้า</h3>
+                  <hr/>
+                  <h2 class="font-size-l" *ngIf="package.receiveLog == null" padding-left="" [ngStyle]="{color:'gray'}">รอดำเนินงาน</h2>
+                  <h2 class="font-size-l" *ngIf="package.receiveLog != null && package.storedLogs == null " padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
+                  <h2 *ngIf="package.storedLogs != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
               </ion-list>
             </ion-col>
 
             <ion-col text-center="" col-3="">
-              <ion-icon style="font-size: 52px" class="icon-pack-not"  name="pause"></ion-icon>
+              <img *ngIf="package.storedLogs == null" src="assets/imgs/stock.png" />
+              <img *ngIf="package.storedLogs != null" src="assets/imgs/stock-done.png" />
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -66,17 +68,17 @@
           <ion-row>
             <ion-col col-9="">
               <ion-list>
-                <ion-item>
-                  จัดส่งสินค้า
-                </ion-item>
-                <ion-item>
-                  รอดำเนินงาน
-                </ion-item>
+                  <h3 padding-left>สินค้าจุดเริ่มต้น</h3>
+                <hr>
+                  <h2 class="font-size-l" *ngIf="package.storedLogs == null" padding-left="" [ngStyle]="{color:'gray'}">รอดำเนินงาน</h2>
+                  <h2 class="font-size-l" *ngIf="package.storedLogs != null && package.startSendlogs == null " padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
+                  <h2 *ngIf="package.startSendlogs != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
               </ion-list>
             </ion-col>
 
             <ion-col text-center="" col-3="">
-              <ion-icon style="font-size: 52px" class="icon-pack-not"  name="pause"></ion-icon>
+              <img *ngIf="package.startSendlogs != null" src="assets/imgs/delivery-done.png" />
+              <img *ngIf="package.startSendlogs == null" src="assets/imgs/delivery.png" />
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -89,17 +91,19 @@
           <ion-row>
             <ion-col col-9="">
               <ion-list>
-                <ion-item>
-                  พักสินค้า
-                </ion-item>
-                <ion-item>
-                  รอดำเนินงาน
-                </ion-item>
+                <h3 padding-left>
+                  สินค้าถึงปลายทาง
+                </h3>
+                <hr>
+                  <h2 class="font-size-l" *ngIf="package.startSendlogs == null" padding-left="" [ngStyle]="{color:'gray'}">รอดำเนินงาน</h2>
+                  <h2 class="font-size-l" *ngIf="package.startSendlogs != null && package.finishLogs == null " padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
+                  <h2 *ngIf="package.finishLogs != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
               </ion-list>
             </ion-col>
 
             <ion-col text-center="" col-3="">
-              <ion-icon style="font-size: 52px" class="icon-pack-not"  name="pause"></ion-icon>
+              <img *ngIf="package.finishLogs != null" src="assets/imgs/isdone-done.png" />
+              <img *ngIf="package.finishLogs == null" src="assets/imgs/isdone.png" />
             </ion-col>
           </ion-row>
         </ion-grid>

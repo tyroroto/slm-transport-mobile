@@ -61,7 +61,8 @@ export class SchedulePage {
         w.finishLogs = item["logs"]["finish_log"] ? item["logs"]["finish_log"]["Des_date"] : null;
         // w.car= "บท-7873";
         console.log(w);
-        this._worklist.push(w);
+        if(w.status != 3)
+          this._worklist.push(w);
       }
       this.worklist = this._worklist;
     })
@@ -79,7 +80,7 @@ export class SchedulePage {
     // this.isLoading = true;
     this.worklist = [];
     for(let w of this._worklist){
-      if(w.assId.includes(this.searchInput)){
+      if(w.assId.includes(this.searchInput) &&  w.status != 3){
         this.worklist.push(w);
       }
     }
@@ -116,19 +117,31 @@ export class SchedulePage {
   doPrompt(w : Worklist,status) {
     let alert = this.alertCtrl.create({
       title: 'ยืนยันการพักสินค้า',
-      subTitle: '<u>กรุณาใส่สถานที่</u>และกดยืนยัน',
+      subTitle: '<u>กรุณาเลือกสถานที่</u>และกดยืนยัน',
       inputs: [
         {
-          name: 'place',
-          placeholder: 'กรุณาใส่ สถานที่พักสินค้า'
+          type: 'radio',
+          label: 'ท่าเรือแหลมฉบัง',
+          value: 'ท่าเรือแหลมฉบัง',
+          checked: false
+        },{
+          type: 'radio',
+          label: 'ท่าเรือสัตหีบ',
+          value: 'ท่าเรือสัตหีบ',
+          checked: false
+        },{
+          type: 'radio',
+          label: 'บริษัทศิลามาศ',
+          value: 'บริษัทศิลามาศ',
+          checked: false
         },
       ],
       buttons: [
         {
           text: 'ยืนยัน',
           handler: data => {
-            if(data.place == null || data.place.length < 1 ) return false;
-            this.updateStatus(w,status,data.place)
+            if(data == undefined) return false;
+              this.updateStatus(w,status,data.place)
           }
         },
         {
@@ -239,7 +252,6 @@ export class SchedulePage {
       }
       w.status = status;
       console.log(w);
-
       this.loading.dismiss().catch(e=>console.error(e));
       this.presentSuccess();
     }).catch(e => {

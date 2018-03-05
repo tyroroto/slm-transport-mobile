@@ -48,13 +48,18 @@ export class OrderListPage {
         w.recieveLocation = item["order"]["Ors_delivery"];
 
         w.packages = [];
-        let p =  new Package(item["Ass_id"], item["product"]["List_name"],item["Ass_status"]);
-        p.receiveLog = item["logs"]["receive_log"] ? item["logs"]["receive_log"]["Pro_date"] : null;
-        p.startSendlogs = item["logs"]["start_send_log"] ? item["logs"]["start_send_log"]["Sta_date"] : null;
-        p.storedLogs = item["logs"]["stored_log"] ? item["logs"]["stored_log"]["Sto_date"] : null;
-        p.storedLocationLogs = item["logs"]["stored_log"] ? item["logs"]["stored_log"]["Sto_room"] : null;
-        p.finishLogs = item["logs"]["finish_log"] ? item["logs"]["finish_log"]["Des_date"] : null;
-        w.packages.push(p);
+        for( let ass of item["assignment"]){
+          let p =  new Package(0, ass["product"]["List_name"],ass["Ass_status"]);
+          console.log("ASS",ass);
+          p.receiveLog = ass["logs"]["receive_log"] ? ass["logs"]["receive_log"]["Pro_date"] : null;
+          p.id = ass["product"]["List_id"] ? ass["product"]["List_id"] : "Undefined";
+          p.category = ass["product"]["Cat_name"] ? ass["product"]["Cat_name"] : null;
+          p.startSendlogs = ass["logs"]["start_send_log"] ? ass["logs"]["start_send_log"]["Sta_date"] : null;
+          p.storedLogs = ass["logs"]["stored_log"] ? ass["logs"]["stored_log"]["Sto_date"] : null;
+          p.storedLocationLogs = ass["logs"]["stored_log"] ? ass["logs"]["stored_log"]["Sto_room"] : null;
+          p.finishLogs = ass["logs"]["finish_log"] ? ass["logs"]["finish_log"]["Des_date"] : null;
+          w.packages.push(p);
+        }
         // w.car= "บท-7873";
         console.log(w);
         this._orders.push(w);
@@ -122,4 +127,7 @@ export class OrderListPage {
     }
   }
 
+  getIndex(o : Order){
+    return this.orders.indexOf(o);
+  }
 }

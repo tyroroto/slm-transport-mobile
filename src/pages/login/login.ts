@@ -41,13 +41,15 @@ export class LoginPage {
 
   signin() {
     // if(this.user.value == "admin" && this.pass.value == "1234"){
-    if (this.user.length == 1) {
-      this.lds.username = "violet";
-      this.lds.password = "1111";
-    } else {
-      this.lds.username = this.user;
-      this.lds.password = this.pass;
-    }
+    // if (this.user.length == 1) {
+    //   this.lds.username = "violet";
+    //   this.lds.password = "1111";
+    // } else {
+    //   this.lds.username = this.user;
+    //   this.lds.password = this.pass;
+    // }
+    this.lds.username = this.user;
+    this.lds.password = this.pass;
     this.presentLoadingDefault();
     this.api.currentUser = new User();
     this.api.login(this.lds.username, this.lds.password).toPromise().then(response => {

@@ -43,6 +43,7 @@ export class HomePage {
       }
     }
   }
+
   logout(){
 
       let alert = this.alertCtrl.create({

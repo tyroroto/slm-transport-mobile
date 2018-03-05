@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>package-list</ion-title>
+    <ion-title>ราการสินค้า</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,15 +17,30 @@
   <div>
     <h1> รายการสินค้า</h1>
     <ion-list>
-      <ion-item *ngFor="let p of packages" >
-        <h1> {{p.name}}</h1>
-        <p> {{p.id}}</p>
-        <h2>
-          {{p.status}}
-        </h2>
-        <button item-end="" ion-button=""  (click)="viewPackage(p)">
-          View
-        </button>
+      <ion-item no-padding="" *ngFor="let p of packages" >
+        <ion-row>
+
+          <ion-col col-9="">
+            <p text-left=""> ID : {{p.id}}</p>
+            <p text-left="" class="font-size-s"> <u>ประเภทสินค้า </u></p>
+            <h1 text-left="" class="font-size-l"> {{p.category}}</h1>
+            <p text-left="" class="font-size-s"> <u>ชื่อสินค้า</u></p>
+            <h1 text-left="" class="font-size-l"> {{p.name}}</h1>
+
+            <!--รหัสสินค้า-->
+          </ion-col>
+          <ion-col col-3="">
+            <img [src]="getImage(p)" />
+            <button float-right="" item-end="" ion-button=""  (click)="viewPackage(p)">
+              ดูสถานะ
+            </button>
+          </ion-col>
+        </ion-row>
+
+        <!--ชื่อสินค้า-->
+        <!--ประเภทสินค้า-->
+        <!--รูปเป็นสถานะ-->
+
       </ion-item>
 
     </ion-list>

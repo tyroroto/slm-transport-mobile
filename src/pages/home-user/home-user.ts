@@ -5,7 +5,8 @@ import {PaymentPage} from "../payment/payment";
 import {PackageListPage} from "../package-list/package-list";
 import {OrderListPage} from "../order-list/order-list";
 import {BroadcastData, BroadcastProvider} from "../../providers/broadcast/broadcast";
-import {Worklist} from "../../models/data";
+import {Package, Worklist} from "../../models/data";
+import {LoginPage} from "../login/login";
 
 @Component({
   selector: 'page-home-user',
@@ -36,8 +37,32 @@ export class HomeUserPage {
     }
   }
 
-  viewPackage( p : Worklist){
-    this.navCtrl.push( PackageListPage, { "worklist" : p});
+  viewPackage( p : Array<Package>){
+    this.navCtrl.push( PackageListPage, { "packages" : p});
   }
+
+  logout(){
+    let alert = this.alertCtrl.create({
+      title: "ต้องการออกจากระบบ",
+      buttons: [
+        {
+          text: 'ยืนยัน',
+          handler: () => {
+            console.log('confirm');
+            this.navCtrl.setRoot(LoginPage);
+          }
+        },
+        {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 }
 

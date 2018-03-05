@@ -73,6 +73,7 @@ export class Package {
   public name;
   public statusText;
   public status;
+  public category;
   public receiveLog;
   public startSendlogs;
   public storedLogs;
