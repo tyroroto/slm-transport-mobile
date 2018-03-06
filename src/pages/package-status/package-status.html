@@ -27,7 +27,7 @@
                 <hr>
                 <h2 class="font-size-l" *ngIf="package.receiveLog == null" padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
                 <h2 *ngIf="package.receiveLog != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
-                <p *ngIf="package.receiveLog != null" padding-left="">{{package.receiveLog}}</p>
+                <p *ngIf="package.receiveLog != null" padding-left="">{{package.receiveLog}} น.</p>
               </ion-list>
             </ion-col>
 
@@ -49,9 +49,11 @@
                <h3 padding-left>พักสินค้า</h3>
                   <hr/>
                   <h2 class="font-size-l" *ngIf="package.receiveLog == null" padding-left="" [ngStyle]="{color:'gray'}">รอดำเนินงาน</h2>
-                  <h2 class="font-size-l" *ngIf="package.receiveLog != null && package.storedLogs == null " padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
+                  <h2 class="font-size-l" *ngIf="package.receiveLog != null && package.storedLogs == null && package.startSendlogs == null" padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
+                  <h2 *ngIf="package.receiveLog != null && package.storedLogs == null && package.startSendlogs != null" padding-left="">ข้าม <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
                   <h2 *ngIf="package.storedLogs != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
-                  <p *ngIf="package.storedLogs != null" padding-left="">{{package.storedLogs}}</p>
+                  <p *ngIf="package.storedLocationLogs != null" padding-left="">สถานที่ {{getLocation(package.storedLocationLogs)}}</p>
+                  <p *ngIf="package.storedLogs != null" padding-left="">{{package.storedLogs}} น.</p>
               </ion-list>
             </ion-col>
 
@@ -72,10 +74,10 @@
               <ion-list>
                   <h3 padding-left>เริ่มขนส่งสินค้า</h3>
                 <hr>
-                  <h2 class="font-size-l" *ngIf="package.storedLogs == null" padding-left="" [ngStyle]="{color:'gray'}">รอดำเนินงาน</h2>
+                  <h2 class="font-size-l" *ngIf="package.storedLogs == null && package.startSendlogs == null" padding-left="" [ngStyle]="{color:'gray'}">รอดำเนินงาน</h2>
                   <h2 class="font-size-l" *ngIf="package.storedLogs != null && package.startSendlogs == null " padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
                   <h2 *ngIf="package.startSendlogs != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
-                  <p *ngIf="package.startSendlogs != null" padding-left="">{{package.startSendlogs}}</p>
+                  <p *ngIf="package.startSendlogs != null" padding-left="">{{package.startSendlogs}} น.</p>
               </ion-list>
             </ion-col>
 
@@ -101,7 +103,7 @@
                   <h2 class="font-size-l" *ngIf="package.startSendlogs == null" padding-left="" [ngStyle]="{color:'gray'}">รอดำเนินงาน</h2>
                   <h2 class="font-size-l" *ngIf="package.startSendlogs != null && package.finishLogs == null " padding-left=""><u>อยู่ระหว่างดำเนินงาน</u></h2>
                   <h2 *ngIf="package.finishLogs != null" padding-left="">เสร็จสิ้น <ion-icon name="checkmark-circle"  [ngStyle]="{color:'green'}"></ion-icon></h2>
-                  <p *ngIf="package.finishLogs != null" padding-left="">{{package.finishLogs}}</p>
+                  <p *ngIf="package.finishLogs != null" padding-left="">{{package.finishLogs}} น.</p>
               </ion-list>
             </ion-col>
 

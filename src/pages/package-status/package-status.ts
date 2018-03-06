@@ -26,4 +26,11 @@ export class PackageStatusPage {
     console.log('ionViewDidLoad PackageStatusPage');
   }
 
+  getLocation(l){
+    if(l == "0") return "ท่าเรือแหลมฉบัง";
+    if(l == "1") return "ท่าเรือสัตหีบ";
+    if(l == "2") return "บริษัทศิลามาศ";
+    return l;
+  }
+
 }

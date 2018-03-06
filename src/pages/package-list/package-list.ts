@@ -36,9 +36,10 @@ export class PackageListPage {
 
 
   getImage(p: Package) {
-    if(p.receiveLog == null) return "assets/imgs/step1-done.png";
-    if(p.storedLogs == null) return "assets/imgs/stock-done.png";
-    if(p.startSendlogs== null) return "assets/imgs/delivery-done.png";
-    if(p.finishLogs != null) return "assets/imgs/isdone-done.png";
-  }
+    if(p.receiveLog == null) return "assets/imgs/step1.png";
+    if(p.receiveLog != null && p.storedLogs == null && p.startSendlogs == null) return "assets/imgs/step1-done.png";
+    if(p.storedLogs != null && p.startSendlogs == null) return "assets/imgs/stock-done.png";
+    if(p.startSendlogs== null && p.finishLogs == null) return "assets/imgs/delivery-done.png";
+    if(p.finishLogs != null) return "assets/imgs/isdone-done.png";}
+
 }

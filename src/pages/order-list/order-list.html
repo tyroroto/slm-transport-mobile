@@ -34,7 +34,7 @@
         <ion-row>
           <ion-col col-6="">
             <p class="font-size-s"><u>ชื่อสินค้า </u></p>
-            <h1 class="font-size-l" text-right=""> {{pa.packages[0].name}}</h1>
+            <h1 class="font-size-l" text-right=""> {{pa.packages.length > 0 ? pa.packages[0].name : "ไม่มี"}}</h1>
           </ion-col>
           <ion-col col-6="">
             <p class="font-size-s"><u>จำนวนสินค้า </u></p>
