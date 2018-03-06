@@ -7,6 +7,7 @@ import {HomePage} from "../home/home";
 import {ApiProvider} from "../../providers/api/api";
 import {HomeUserPage} from "../home-user/home-user";
 import {User} from "../../models/data";
+import {RegisterPage} from "../register/register";
 
 @Component({
   selector: 'page-login',
@@ -119,4 +120,7 @@ export class LoginPage {
     alert.present(prompt).then();
   }
 
+  openRegister() {
+    this.navCtrl.push(RegisterPage).catch(e=>console.error(e));
+  }
 }

@@ -69,6 +69,15 @@ export class ApiProvider {
     return this.http.post("api/api_update_status.php",form);
 
   }
+
+  register(refId: string, user: string, pass: string) {
+    let form = new FormData();
+    form.append("refId" , refId );
+    form.append("username" , user);
+    form.append("password" , pass );
+    //type='customer' ,Cus_id ,Cus_name ,Cus_tel ,Cus_sex
+    return this.http.post("api/api_register.php",form,{responseType: 'text'});
+  }
 }
 
 

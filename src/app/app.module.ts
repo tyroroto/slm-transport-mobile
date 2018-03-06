@@ -20,6 +20,7 @@ import {PackageListPage} from "../pages/package-list/package-list";
 import {OrderListPage} from "../pages/order-list/order-list";
 import { BroadcastProvider } from '../providers/broadcast/broadcast';
 import { AppProvider } from '../providers/app/app';
+import {RegisterPage} from "../pages/register/register";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AppProvider } from '../providers/app/app';
     PaymentPage,
     SchedulePage,
     PackageListPage,
-    OrderListPage
+    OrderListPage,
+    RegisterPage
 
   ],
   imports: [
@@ -54,7 +56,9 @@ import { AppProvider } from '../providers/app/app';
     PaymentPage,
     SchedulePage,
     PackageListPage,
-    OrderListPage
+    OrderListPage,
+    RegisterPage
+
 
   ],
   providers: [

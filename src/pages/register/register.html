@@ -1,0 +1,55 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>ลงทะเบียน</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="login-content"  no-padding="">
+  <br><br>
+
+  <div class="login-box" >
+    <form (ngSubmit)="register()"  #registerForm="ngForm">
+      <ion-row>
+        <ion-col class="col" col-12>
+          <p style="color:red" *ngIf="!refId">กรุณาใส่ RefID</p>
+          <ion-item>
+            <ion-label color="dark" style="font-weight: 600;font-size: large;">Ref ID: </ion-label>
+            <ion-input text-right="" class="logininput" type="text" placeholder="RefId"  [ngModelOptions]="{standalone: true}" [(ngModel)]="refId" required></ion-input>
+          </ion-item>
+          <p style="color:red" *ngIf="user && user.length < 3">Username อย่างน้อย 4 ตัว</p>
+          <ion-item>
+            <ion-label color="dark" style="font-weight: 600;font-size: large;">Username: </ion-label>
+            <ion-input text-right="" class="logininput" type="text" placeholder="Username"  [ngModelOptions]="{standalone: true}" name="username" [(ngModel)]="user" required></ion-input>
+          </ion-item>
+          <p style="color:red" *ngIf="pass && pass.length < 3">Password อย่างน้อย 4 ตัว</p>
+          <ion-item>
+            <ion-label color="dark" style="font-weight: 600;font-size: large;">Password: </ion-label>
+            <ion-input text-right="" class="logininput" type="password" placeholder="Password"  [ngModelOptions]="{standalone: true}" name="password" [(ngModel)]="pass" required></ion-input>
+          </ion-item>
+          <p style="color:red" *ngIf="pass != pass2">Password ไม่ตรงกัน</p>
+          <ion-item>
+            <ion-label color="dark" style="font-weight: 600;font-size: large;">Confirm Password: </ion-label>
+            <ion-input text-right="" class="logininput" type="password" placeholder="Confirm Password" name="password2"  [ngModelOptions]="{standalone: true}" [(ngModel)]="pass2" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <br>
+      <ion-row padding-left>
+        <ion-col class="col"></ion-col>
+        <ion-col class="col" col-6>
+          <button ion-button full class="submit-btn"  type="submit" [disabled]="(!user || user.length < 3) || (!pass || pass.length < 3) || (pass != pass2) || !refId" round>Register</button>
+        </ion-col>
+        <ion-col class="col"></ion-col>
+      </ion-row>
+      <!--<button ion-button class="register-btn" block clear (click)="createAccount()">|  Create New Account  |</button>-->
+    </form>
+  </div>
+
+</ion-content>
