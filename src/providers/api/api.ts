@@ -76,7 +76,7 @@ export class ApiProvider {
     form.append("username" , user);
     form.append("password" , pass );
     //type='customer' ,Cus_id ,Cus_name ,Cus_tel ,Cus_sex
-    return this.http.post("api/api_register.php",form,{responseType: 'text'});
+    return this.http.post("api/api_update_customer.php",form,{responseType: 'text'});
   }
 }
 

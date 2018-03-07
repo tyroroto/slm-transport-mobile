@@ -42,6 +42,22 @@ export class RegisterPage {
     console.log('ionViewDidLoad RegisterPage');
   }
 
+  presentSuccess() {
+    this.loading.dismiss().then();
+    let alert = this.alertCtrl.create({
+      title: "ลงทะเบียนเรียบร้อยแล้ว",
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.navCtrl.setRoot(LoginPage);
+          }
+        }
+      ]
+    });
+    alert.present(prompt).then();
+  }
+
 
   register() {
     if(this.pass != this.pass2){
@@ -54,7 +70,7 @@ export class RegisterPage {
       try {
         response = JSON.parse(response);
         console.log(response);
-        this.navCtrl.setRoot(LoginPage);
+        this.presentSuccess();
       } catch (e) {
         this.showError(response);
       }
