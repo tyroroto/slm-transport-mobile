@@ -75,7 +75,9 @@ export class EditInfoPage {
       this.loading.dismiss();
       console.log(r);
     }).catch(e=>{
-      console.error(e);      this.editing = false;
+      console.error(e);
+      this.showError("ล้มเหลว");
+      this.editing = false;
     });
   }
 
